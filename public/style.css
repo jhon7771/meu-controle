@@ -1,14 +1,8 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 body {
     font-family: Arial, sans-serif;
-    background: #f4f6f8;
-    color: #1f2937;
-    padding: 30px;
+    background: #f2f4f7;
+    margin: 0;
+    padding: 20px;
 }
 
 .container {
@@ -17,129 +11,215 @@ body {
 }
 
 header {
-    margin-bottom: 25px;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 header h1 {
-    font-size: 32px;
-    margin-bottom: 5px;
+    color: #111827;
+    font-size: 35px;
 }
 
 header p {
     color: #6b7280;
 }
 
+
 .cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    margin-bottom: 25px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
 }
+
 
 .card {
     background: white;
-    padding: 22px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    padding: 25px;
+    border-radius: 18px;
+    flex: 1;
+    min-width: 220px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
+
 
 .card span {
-    display: block;
     color: #6b7280;
-    font-size: 14px;
-    margin-bottom: 8px;
 }
+
 
 .card strong {
-    font-size: 24px;
+    display: block;
+    font-size: 28px;
+    margin-top: 10px;
 }
 
-.saldo {
-    background: #111827;
-    color: white;
+
+.saldo strong {
+    color: #2563eb;
 }
 
-.saldo span {
-    color: #d1d5db;
-}
-
-.form-box,
-.movimentos {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-}
-
-.form-box h2,
-.movimentos h2 {
-    margin-bottom: 20px;
-}
-
-form {
-    display: grid;
-    gap: 12px;
-}
-
-input,
-select,
-button {
-    width: 100%;
-    padding: 13px;
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
-    font-size: 15px;
-}
-
-button {
-    background: #111827;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-.movimento {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
-}
 
 .entrada {
     color: #16a34a;
 }
 
+
 .saida {
     color: #dc2626;
 }
 
-@media (max-width: 700px) {
-    body {
-        padding: 15px;
-    }
 
-    .cards {
-        grid-template-columns: 1fr;
-    }
+
+.form-box,
+.movimentos {
+
+    background: white;
+    padding: 25px;
+    margin-top: 25px;
+    border-radius: 18px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+
 }
-.btn-eliminar {
-    background: #fee2e2;
-    color: #dc2626;
-    border: none;
-    padding: 7px 10px;
-    margin-top: 8px;
-    font-size: 12px;
+
+
+input,
+select,
+button {
+
+    width: 100%;
+    padding: 13px;
+    margin-top: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+
+}
+
+
+button {
+
+    background: #2563eb;
+    color: white;
     cursor: pointer;
-    width: auto;
+    border: none;
+    transition: 0.3s;
+
 }
+
+
+button:hover {
+
+    background: #1d4ed8;
+
+}
+
+
+.movimento {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #eee;
+
+}
+
+
+.btn-eliminar {
+
+    background: #dc2626;
+    margin-top: 10px;
+
+}
+
 
 .btn-eliminar:hover {
-    background: #fecaca;
+
+    background: #b91c1c;
+
+}
+
+
+
+@media(max-width:600px){
+
+    body {
+        padding: 10px;
+    }
+
+
+    .movimento {
+
+        flex-direction: column;
+        align-items: flex-start;
+
+    }
+
+
+}
+.grafico-container {
+    width: 350px;
+    max-width: 100%;
+    margin: 20px auto;
+}
+.btn-sair{
+
+    display:inline-block;
+    margin-top:15px;
+    padding:12px 18px;
+    background:#dc2626;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:bold;
+
+}
+
+.btn-sair:hover{
+
+    background:#b91c1c;
+
+}
+.usuario{
+    margin-top: 10px;
+    font-size: 18px;
+    color: #374151;
+}
+.menu{
+    background:#1f2937;
+    color:white;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:15px 20px;
+    border-radius:12px;
+    margin-bottom:25px;
+    flex-wrap:wrap;
+}
+
+.menu a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.menu a:hover{
+    color:#60a5fa;
+}
+
+.menu .usuario{
+    margin-left:auto;
+    color:#f3f4f6;
+}
+
+.btn-sair{
+    background:#dc2626;
+    color:white;
+    padding:8px 15px;
+    border-radius:8px;
+    text-decoration:none;
+}
+
+.btn-sair:hover{
+    background:#b91c1c;
 }
