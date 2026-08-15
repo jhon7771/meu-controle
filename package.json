@@ -19,6 +19,7 @@
     "express-session": "^1.19.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
+    "pg": "^8.23.0",
     "sqlite3": "^5.1.7"
   },
   "allowScripts": {
