@@ -5,6 +5,7 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 const app = express();
+app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 // ===============================
@@ -142,7 +143,11 @@ function verificarLogin(req, res, next) {
 // ===============================
 // LOGIN
 // ===============================
-
+app.use((req, res, next) => {
+    console.log('PETICIÓN:', req.method, req.url);
+    next();
+});
+console.log('RUTA LOGIN REGISTRADA');
 app.get('/login', (req, res) => {
 
     if (req.session.usuario) {
@@ -217,11 +222,17 @@ app.post('/registro', async (req, res) => {
         const { nome, email, senha } = req.body;
 
         if (!nome || !email || !senha) {
-            return res.send('Preencha todos os campos.');
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Preencha todos os campos.'
+            });
         }
 
         if (senha.length < 6) {
-            return res.send('A senha precisa ter pelo menos 6 caracteres.');
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'A senha precisa ter pelo menos 6 caracteres.'
+            });
         }
 
         const senhaCriptografada = await bcrypt.hash(senha, 10);
@@ -234,17 +245,26 @@ app.post('/registro', async (req, res) => {
             [nome, email, senhaCriptografada]
         );
 
-        res.redirect('/login');
+        return res.status(201).json({
+            sucesso: true,
+            mensagem: 'Conta criada com sucesso!'
+        });
 
     } catch (erro) {
 
         console.error(erro);
 
         if (erro.message.includes('UNIQUE')) {
-            return res.send('Este email já está cadastrado.');
+            return res.status(409).json({
+                sucesso: false,
+                mensagem: 'Este email já está cadastrado.'
+            });
         }
 
-        res.status(500).send('Erro ao criar usuário.');
+        return res.status(500).json({
+            sucesso: false,
+            mensagem: 'Erro ao criar usuário.'
+        });
 
     }
 
