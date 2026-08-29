@@ -164,7 +164,10 @@ app.post('/login', async (req, res) => {
         const { email, senha } = req.body;
 
         if (!email || !senha) {
-            return res.send('Preencha email e senha.');
+            return res.status(400).json({
+                sucesso: false,
+                mensagem: 'Preencha email e senha.'
+            });
         }
 
         const usuario = await get(
@@ -173,7 +176,10 @@ app.post('/login', async (req, res) => {
         );
 
         if (!usuario) {
-            return res.send('Usuário não encontrado.');
+            return res.status(401).json({
+                sucesso: false,
+                mensagem: 'Usuário não encontrado.'
+            });
         }
 
         const senhaCorreta = await bcrypt.compare(
@@ -182,7 +188,10 @@ app.post('/login', async (req, res) => {
         );
 
         if (!senhaCorreta) {
-            return res.send('Senha incorreta.');
+            return res.status(401).json({
+                sucesso: false,
+                mensagem: 'Senha incorreta.'
+            });
         }
 
         req.session.usuario = {
@@ -191,12 +200,24 @@ app.post('/login', async (req, res) => {
             email: usuario.email
         };
 
-        res.redirect('/');
+        return res.json({
+            sucesso: true,
+            mensagem: 'Login realizado com sucesso!',
+            usuario: {
+                id: usuario.id,
+                nome: usuario.nome,
+                email: usuario.email
+            }
+        });
 
     } catch (erro) {
 
         console.error(erro);
-        res.status(500).send('Erro no servidor.');
+
+        return res.status(500).json({
+            sucesso: false,
+            mensagem: 'Erro no servidor.'
+        });
 
     }
 
