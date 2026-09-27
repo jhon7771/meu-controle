@@ -1124,7 +1124,66 @@ app.get('/estatisticas', verificarLogin, async (req, res) => {
     }
 
 });
+// API DASHBOARD - APP MOVIL
 
+app.get('/api/dashboard', verificarLogin, async (req, res) => {
+
+    try {
+
+        const usuarioId = req.session.usuario.id;
+
+        const resumo = await get(
+            `
+            SELECT
+                COALESCE(SUM(CASE WHEN tipo = 'entrada' THEN valor ELSE 0 END), 0) AS entradas,
+                COALESCE(SUM(CASE WHEN tipo = 'saida' THEN valor ELSE 0 END), 0) AS saidas
+            FROM movimentos
+            WHERE usuario_id = ?
+            `,
+            [usuarioId]
+        );
+
+        const movimentos = await all(
+            `
+            SELECT
+                id,
+                tipo,
+                categoria,
+                descricao,
+                valor
+            FROM movimentos
+            WHERE usuario_id = ?
+            ORDER BY id DESC
+            LIMIT 20
+            `,
+            [usuarioId]
+        );
+
+        const entradas = Number(resumo.entradas);
+        const saidas = Number(resumo.saidas);
+        const saldo = entradas - saidas;
+
+        res.json({
+            sucesso: true,
+            usuario: req.session.usuario,
+            saldo,
+            entradas,
+            saidas,
+            movimentos
+        });
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        res.status(500).json({
+            sucesso: false,
+            mensagem: 'Erro ao carregar o dashboard.'
+        });
+
+    }
+
+});
 // ===============================
 // INICIAR SERVIDOR
 // ===============================
